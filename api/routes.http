@@ -1,0 +1,42 @@
+//cliente para testar requisições diretamente
+
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+### 
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="gravacao.mp3"
+Content-Type: audio/mpeg
+
+< ./gravacao.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 
+
+# @name transcription
+
+POST http://localhost:3333/videos/b746c47d-87a8-4afb-98ce-07a9d899eb1c/transcription
+Content-Type: application/json
+
+{
+    "prompt": "Teste"
+}
+
+### 
+
+# @name generate-ia-completion
+
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId" : "b746c47d-87a8-4afb-98ce-07a9d899eb1c",
+    "temperature": 0.5,
+    "template": "O que foi falado transcricao informada? '''{transcription}'''"
+    
+}
